@@ -4,8 +4,7 @@ import { ruruHTML } from "ruru/dist/server";
 import cors from "cors";
 import { createGraphQLHandler } from "./graphql";
 import { globalMiddleWareController } from "./middleware/global";
-
-const PORT = 4000;
+import {config} from './lib/env-config'
 
 const app = express();
 
@@ -27,8 +26,8 @@ app.get("/graphql", (req, res) => {
 
 app.post("/graphql", createGraphQLHandler);
 
-app.listen(PORT, () => {
-  console.log(`Serever Started on http://localhost:${PORT}`);
+app.listen(config.PORT, () => {
+  console.log(`Serever Started on http://localhost:${config.PORT}`);
 });
 
 // function allMiddleWare(app) {
