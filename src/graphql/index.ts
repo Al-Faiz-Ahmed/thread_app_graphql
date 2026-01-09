@@ -1,19 +1,19 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createHandler } from "graphql-http/lib/use/express";
 
-const typeDefs = `#graphql
+// const typeDefs = `#grahql 
   
-  type Query {
-    greeting: String!
-  }
+//   type Query {
+//     greeting: String!
+//   }
   
-  `;
+//   `;
 
-const resolvers = {
-  Query: {
-    greeting: () => `Hello Faizan Created this`,
-  },
-};
+// const resolvers = {
+//   Query: {
+//     greeting: () => `Hello Faizan Created this`,
+//   },
+// };
 
 const schema = makeExecutableSchema({
   typeDefs,

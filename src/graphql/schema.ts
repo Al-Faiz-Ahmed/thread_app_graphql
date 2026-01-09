@@ -1,12 +1,26 @@
-import { GlobalTypeDefs } from "./global.schema";
+import { User } from "./users";
 
-const typeDefs = `#graphql
+const typeDefs = `
+  
 
-   {...GlobalTypeDefs}
- 
-`;
+  type Query {
+    ${User.queries}
+   }
+    
+    type Mutation {
+    ${User.mutations}
+    }
+
+
+  `;
 
 const resolvers = {
-  Query: {},
-  Mutation: {},
+  Query: {
+    ...User.resolvers.queries
+  },
+  Mutation: {
+     ...User.resolvers.mutations
+  },
 };
+
+export { typeDefs, resolvers };
