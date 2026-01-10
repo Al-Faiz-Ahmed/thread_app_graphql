@@ -7,7 +7,8 @@
     "dev": "tsc-watch --onCompilationComplete \"tsc-alias\" --onSuccess \"npm start\"",
     "devv": "tsx watch src/index.ts",
     "build": "tsc && tsc-alias",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "db:migrate": "prisma migrate dev"
   },
   "keywords": [],
   "author": "",
