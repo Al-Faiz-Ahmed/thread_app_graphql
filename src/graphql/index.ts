@@ -1,5 +1,6 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createHandler } from "graphql-http/lib/use/express";
+import { resolvers, typeDefs } from "./schema";
 
 // const typeDefs = `#grahql 
   
