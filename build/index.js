@@ -1,14 +1,14 @@
 import express from "express";
 import { createYoga } from "graphql-yoga";
-// import { createGraphQLHandler } from "./graphql/index.js";
 import { globalMiddleWareController } from "./middleware/global.js";
 import { config } from "./lib/config/env-config.js";
 import { schema } from "./graphql/index.js";
+import { createContext } from "./graphql/context/context.js";
 const app = express();
 const yoga = createYoga({
     schema,
-    // Enable the GraphiQL in-browser tool for testing
     graphiql: true,
+    context: async ({ request }) => createContext(request),
 });
 globalMiddleWareController(app);
 app.get("/", (req, res) => {
