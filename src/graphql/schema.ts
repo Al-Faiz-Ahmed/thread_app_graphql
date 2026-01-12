@@ -1,26 +1,12 @@
-import { User } from "./users";
+import { gql } from 'graphql-tag'
+import { moduleTypeDefs } from './modules'
 
-const typeDefs = `
-  
+const typeDefs = gql`
+  type Query
+  type Mutation
+`
 
-  type Query {
-    ${User.queries}
-   }
-    
-    type Mutation {
-    ${User.mutations}
-    }
-
-
-  `;
-
-const resolvers = {
-  Query: {
-    ...User.resolvers.queries
-  },
-  Mutation: {
-     ...User.resolvers.mutations
-  },
-};
-
-export { typeDefs, resolvers };
+export const schemaTypeDefs = [
+  typeDefs,
+  ...moduleTypeDefs,
+]

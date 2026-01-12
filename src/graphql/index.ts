@@ -1,32 +1,20 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { createHandler } from "graphql-http/lib/use/express";
-import { resolvers, typeDefs } from "./schema";
+import { resolvers } from "./resolvers";
+import { schemaTypeDefs } from "./schema";
+import { createSchema } from "graphql-yoga";
 
-// const typeDefs = `#grahql 
-  
-//   type Query {
-//     greeting: String!
-//   }
-  
-//   `;
 
-// const resolvers = {
-//   Query: {
-//     greeting: () => `Hello Faizan Created this`,
-//   },
-// };
-
-const schema = makeExecutableSchema({
-  typeDefs,
+export const schema = createSchema({
+  typeDefs:schemaTypeDefs,
   resolvers,
 });
 
 
-export const createGraphQLHandler = () => {
-    return  createHandler({
-    schema: schema,
-  })
-}
-
+// export const createGraphQLHandler = () => {
+//     return  createHandler({
+//     schema: schema,
+//   })
+// }
 
 

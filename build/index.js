@@ -1,7 +1,33 @@
 import express from "express";
-import { iamMiddleware } from "./middleware.js";
+import { createYoga } from "graphql-yoga";
+// import { createGraphQLHandler } from "./graphql/index.js";
+import { globalMiddleWareController } from "./middleware/global.js";
+import { config } from "./lib/config/env-config.js";
+import { schema } from "./graphql/index.js";
 const app = express();
-app.get('/', iamMiddleware, (req, res) => { res.send("Helllo"); });
-app.listen(4000, () => {
-    console.log(`Server started succesfully`);
+const yoga = createYoga({
+    schema,
+    // Enable the GraphiQL in-browser tool for testing
+    graphiql: true,
 });
+globalMiddleWareController(app);
+app.get("/", (req, res) => {
+    res.type(".html");
+    res.send("<h1>Server is working</h1>");
+});
+// app.get("/graphql", (req, res) => {
+//   res.type("html");
+//   res.end(
+//     ruruHTML({
+//       endpoint: "/graphql",
+//     }),
+//   );
+// });
+app.use("/graphql", yoga);
+app.listen(config.PORT, () => {
+    console.log(`Serever Started on http://localhost:${config.PORT}`);
+});
+// function allMiddleWare(app) {
+//   app.use(express.json());
+//   app.use(cors());
+// }
