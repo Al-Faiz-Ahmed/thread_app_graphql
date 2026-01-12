@@ -1,9 +1,11 @@
+import { GraphQLContext } from "../../context/context";
+
 export const userResolvers = {
   Query: {
-    _empty: () => `Faizan`,
+    _empty: (_:unknown, _args:unknown, context:GraphQLContext) => `Faizan`,
   },
 
   Mutation: {
-    _empty: () => `Faizan`,
+    _empty: (_:unknown, _args:unknown, context:GraphQLContext) => `Faizan`,
   },
 }

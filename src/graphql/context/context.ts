@@ -1,15 +1,16 @@
+
 import type { Request } from 'express'
 import { prisma } from '../../lib/config/prisma-config'
 
 
 export type GraphQLContext = {
   prisma: typeof prisma
-  req: Request
+  req: unknown
 }
 
-export const createContext = (req: Request): GraphQLContext => {
+export const createContext = (req: unknown): GraphQLContext => {
   return {
     prisma,
-    req,
+    req
   }
 }

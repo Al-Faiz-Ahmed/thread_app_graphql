@@ -16,6 +16,7 @@
   "type": "module",
   "dependencies": {
     "@graphql-tools/schema": "^10.0.31",
+    "@graphql-tools/utils": "^11.0.0",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "cors": "^2.8.5",

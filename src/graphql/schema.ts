@@ -1,4 +1,5 @@
 import { gql } from 'graphql-tag'
+import type { TypeSource } from '@graphql-tools/utils'
 import { moduleTypeDefs } from './modules'
 
 const typeDefs = gql`
@@ -6,7 +7,7 @@ const typeDefs = gql`
   type Mutation
 `
 
-export const schemaTypeDefs = [
+export const schemaTypeDefs: TypeSource = [
   typeDefs,
   ...moduleTypeDefs,
 ]
