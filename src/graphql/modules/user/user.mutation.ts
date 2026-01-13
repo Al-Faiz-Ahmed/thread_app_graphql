@@ -6,6 +6,8 @@ export const userMutationDefs = gql`
 
     updateUser(input: UpdateUserInput!): BrowserUser!
 
+    deleteUser(id: String! ): String!
+
     _empty: String!
   }
 `;

@@ -1,7 +1,7 @@
 import { createHmac, randomBytes } from "node:crypto";
 import type { User } from "../../../generated/prisma/client";
 import { prisma } from "../../../lib/config/prisma-config";
-import type { ICreateUser, IUpdateUser } from "./types";
+import type { ICreateUser,  IUpdateUser } from "./types";
 
 class UserService {
   private static createSalt() {
@@ -48,6 +48,13 @@ class UserService {
       },
       /* id = id */
       where: { id },
+    });
+  }
+  public static deleteUser(id: string) {
+    
+    return prisma.user.delete({
+      /* id = id */
+      where: { id }
     });
   }
 }
