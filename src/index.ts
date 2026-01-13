@@ -5,9 +5,6 @@ import { config } from "./lib/config/env-config";
 import {schema} from "./graphql"
 import { createContext } from "./graphql/context/context";
 
-interface MyUserContext {
-  db: any
-}
 
 const app = express();
 const yoga = createYoga({
