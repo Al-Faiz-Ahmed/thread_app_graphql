@@ -1,9 +1,7 @@
 import { createHmac, randomBytes } from "node:crypto";
 import type { User } from "../../../generated/prisma/client";
 import { prisma } from "../../../lib/config/prisma-config";
-import { ICreateUser } from "./types";
-
-
+import type { ICreateUser, IUpdateUser } from "./types";
 
 class UserService {
   private static createSalt() {
@@ -31,10 +29,25 @@ class UserService {
         lastName,
         email,
         username,
-        profileImageURL:"",
+        profileImageURL: "",
         password: hashedPassword,
         salt,
       },
+    });
+  }
+
+  public static updateUser(payload: IUpdateUser) {
+    const { firstName, lastName, username, profileImageURL, id } =
+      payload.input;
+    return prisma.user.update({
+      data: {
+        firstName,
+        lastName,
+        username,
+        profileImageURL,
+      },
+      /* id = id */
+      where: { id },
     });
   }
 }

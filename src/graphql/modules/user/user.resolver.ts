@@ -1,5 +1,5 @@
 import { GraphQLContext } from "../../context/context";
-import { ICreateUser } from "./types";
+import { ICreateUser, IUpdateUser } from "./types";
 import UserService from "./user.services";
 
 const queries = {
@@ -7,13 +7,23 @@ const queries = {
 };
 
 const mutations = {
-  createUser : async (_: unknown, payload: ICreateUser, context: GraphQLContext) => {
-    console.log("I am geting here")
-    
-      const res = await UserService.createUser(payload)
-   
-      return res.id
+  createUser: async (
+    _: unknown,
+    payload: ICreateUser,
+    context: GraphQLContext,
+  ) => {
+    const res = await UserService.createUser(payload);
+    return res.id;
   },
+
+  updateUser : async (
+    _: unknown,
+    payload: IUpdateUser,
+    context: GraphQLContext,
+  ) => {
+    const res = await UserService.updateUser(payload);
+    return res;
+  }, 
   _empty: (_: unknown, _args: unknown, context: GraphQLContext) => `Faizan`,
 };
 
