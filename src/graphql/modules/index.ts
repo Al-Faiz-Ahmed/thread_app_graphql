@@ -12,9 +12,9 @@ export const moduleTypeDefs = [
 
 export const moduleResolvers = {
   Query: {
-    ...userResolvers.Query,
+    ...userResolvers.queries,
   },
   Mutation: {
-    ...userResolvers.Mutation,
+    ...userResolvers.mutations,
   },
 }
