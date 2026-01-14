@@ -1,5 +1,5 @@
 import { GraphQLContext } from "../../context/context";
-import { ICreateUser,  IUpdateUser } from "./types";
+import { ICreateUser,  IDeleteUser,  IUpdateUser } from "./types";
 import UserService from "./user.services";
 
 const queries = {
@@ -9,27 +9,27 @@ const queries = {
 const mutations = {
   createUser: async (
     _: unknown,
-    payload: ICreateUser,
+    payload: {input:ICreateUser},
     context: GraphQLContext,
   ) => {
-    const res = await UserService.createUser(payload);
+    const res = await UserService.createUser(payload.input);
     return res.id;
   },
 
   updateUser : async (
     _: unknown,
-    payload: IUpdateUser,
+    payload: {input:IUpdateUser},
     context: GraphQLContext,
   ) => {
-    const res = await UserService.updateUser(payload);
+    const res = await UserService.updateUser(payload.input);
     return res;
   }, 
   deleteUser : async (
     _: unknown,
-    {id}: {id:string},
+    payload: IDeleteUser,
     context: GraphQLContext,
   ) => {
-    const res = await UserService.deleteUser(id);
+    const res = await UserService.deleteUser(payload);
     return "User Successfully Deleted";
   }, 
 

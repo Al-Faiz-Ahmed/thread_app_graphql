@@ -1,7 +1,8 @@
 import { createHmac, randomBytes } from "node:crypto";
 import type { User } from "../../../generated/prisma/client";
 import { prisma } from "../../../lib/config/prisma-config";
-import type { ICreateUser,  IUpdateUser } from "./types";
+import type { ICreateUser, IDeleteUser, IUpdateUser } from "./types";
+import { vCreateUser } from "./schema.validation";
 
 class UserService {
   private static createSalt() {
@@ -19,7 +20,27 @@ class UserService {
   }
 
   public static createUser(payload: ICreateUser) {
-    const { firstName, lastName, email, password, username } = payload.input;
+    const { firstName, lastName, email, password, username } = payload;
+
+    const response = vCreateUser.safeParse({ payload });
+
+    if (response.success) {
+      const salt = this.createSalt();
+      const hashedPassword = this.createHashedPassword({ salt, password });
+
+      return prisma.user.create({
+        data: {
+          firstName,
+          lastName,
+          email,
+          username,
+          profileImageURL: "",
+          password: hashedPassword,
+          salt,
+        },
+      });
+    }
+
     const salt = this.createSalt();
     const hashedPassword = this.createHashedPassword({ salt, password });
 
@@ -38,7 +59,7 @@ class UserService {
 
   public static updateUser(payload: IUpdateUser) {
     const { firstName, lastName, username, profileImageURL, id } =
-      payload.input;
+      payload;
     return prisma.user.update({
       data: {
         firstName,
@@ -50,11 +71,12 @@ class UserService {
       where: { id },
     });
   }
-  public static deleteUser(id: string) {
-    
+
+  public static deleteUser(payload: IDeleteUser) {
+    const { id } = payload;
     return prisma.user.delete({
       /* id = id */
-      where: { id }
+      where: { id },
     });
   }
 }
