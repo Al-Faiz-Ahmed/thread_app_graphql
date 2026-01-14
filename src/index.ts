@@ -11,6 +11,7 @@ const yoga = createYoga({
   schema,
   graphiql: true,
   context : async ({request}) => createContext(request),
+  
 });
 
 globalMiddleWareController(app);

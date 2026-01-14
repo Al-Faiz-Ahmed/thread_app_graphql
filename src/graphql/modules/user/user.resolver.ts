@@ -12,6 +12,7 @@ const mutations = {
     payload: {input:ICreateUser},
     context: GraphQLContext,
   ) => {
+    
     const res = await UserService.createUser(payload.input);
     return res.id;
   },
@@ -21,6 +22,7 @@ const mutations = {
     payload: {input:IUpdateUser},
     context: GraphQLContext,
   ) => {
+    
     const res = await UserService.updateUser(payload.input);
     return res;
   }, 

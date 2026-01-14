@@ -3,6 +3,8 @@ import type { User } from "../../../generated/prisma/client";
 import { prisma } from "../../../lib/config/prisma-config";
 import type { ICreateUser, IDeleteUser, IUpdateUser } from "./types";
 import { vCreateUser } from "./schema.validation";
+import { ValidationError } from "../../../error/validation-error";
+import { GraphQLError } from "graphql";
 
 class UserService {
   private static createSalt() {
@@ -21,8 +23,8 @@ class UserService {
 
   public static createUser(payload: ICreateUser) {
     const { firstName, lastName, email, password, username } = payload;
-
-    const response = vCreateUser.safeParse({ payload });
+    console.log({ payload });
+    const response = vCreateUser.safeParse({ ...payload });
 
     if (response.success) {
       const salt = this.createSalt();
@@ -39,27 +41,20 @@ class UserService {
           salt,
         },
       });
+    } else {
+      console.log(response.error.message);
+      const schemaErr = response.error.issues[0]?.message || "Error found in schema"
+      throw new GraphQLError(schemaErr, {
+        extensions: {
+          code: "VALIDATION_ERROR",
+        },
+      });
+      // throw new ValidationError(response.error.issues[0]?.message || "Error found in schema")
     }
-
-    const salt = this.createSalt();
-    const hashedPassword = this.createHashedPassword({ salt, password });
-
-    return prisma.user.create({
-      data: {
-        firstName,
-        lastName,
-        email,
-        username,
-        profileImageURL: "",
-        password: hashedPassword,
-        salt,
-      },
-    });
   }
 
   public static updateUser(payload: IUpdateUser) {
-    const { firstName, lastName, username, profileImageURL, id } =
-      payload;
+    const { firstName, lastName, username, profileImageURL, id } = payload;
     return prisma.user.update({
       data: {
         firstName,
